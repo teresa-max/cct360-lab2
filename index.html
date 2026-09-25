@@ -5,19 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Window Reading Corner</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <main>
-      <h1>Window Reading Corner</h1>
-      <p class="intro">A quiet place to slow down.</p>
+    <main class="page">
+      <h1>By the Window</h1>
 
-      <img
-        class="corner-photo"
-        src="./images/reading-corner.jpg"
-        alt="A reading corner with a window seat, lamp, books, and a cup"
-      />
+      <div class="gallery">
+        <aside class="side-note" aria-live="polite">
+          <span class="note-label">HOVER TO EXPLORE</span>
+          <p id="hint">A quiet place<br />to slow down.</p>
+          <span class="note-detail">LAMP · FRAME · BOOKS</span>
+        </aside>
 
-      <p class="hint">Click around the reading corner.</p>
+        <div class="scene" id="scene">
+          <img
+            class="corner-photo"
+            src="images/reading-corner.jpg"
+            alt="A window reading corner with a wall lamp, framed artwork, and books"
+          />
+
+          <div
+            class="art-overlay"
+            id="art-overlay"
+            data-art="0"
+            aria-hidden="true"
+          >
+            <svg class="artwork artwork-abstract" viewBox="0 0 100 180">
+              <path
+                d="M18 146 C31 109 43 76 76 30"
+                fill="none"
+                stroke="#705746"
+                stroke-width="7"
+              />
+              <path
+                d="M35 151 C56 127 68 102 83 70"
+                fill="none"
+                stroke="#a37658"
+                stroke-width="11"
+                opacity=".8"
+              />
+              <circle cx="67" cy="52" r="16" fill="#ba8b66" opacity=".75" />
+            </svg>
+
+            <svg class="artwork artwork-botanical" viewBox="0 0 100 180">
+              <path
+                d="M47 158 C48 116 53 72 65 25"
+                fill="none"
+                stroke="#52644d"
+                stroke-width="4"
+              />
+              <path
+                d="M50 117 C34 97 27 80 23 66 M56 87 C71 72 77 58 79 44"
+                fill="none"
+                stroke="#52644d"
+                stroke-width="3"
+              />
+              <ellipse
+                cx="25"
+                cy="72"
+                rx="12"
+                ry="23"
+                transform="rotate(-38 25 72)"
+                fill="#728367"
+              />
+              <ellipse
+                cx="77"
+                cy="51"
+                rx="11"
+                ry="22"
+                transform="rotate(32 77 51)"
+                fill="#829174"
+              />
+              <ellipse
+                cx="59"
+                cy="37"
+                rx="9"
+                ry="19"
+                transform="rotate(24 59 37)"
+                fill="#667b61"
+              />
+            </svg>
+          </div>
+
+          <button
+            class="hotspot art-hotspot"
+            id="art"
+            type="button"
+            aria-label="Change the artwork"
+          ></button>
+
+          <button
+            class="hotspot lamp-hotspot"
+            id="lamp"
+            type="button"
+            aria-label="Turn on the lamp"
+            aria-pressed="false"
+          ></button>
+
+          <button
+            class="hotspot books-hotspot"
+            id="books"
+            type="button"
+            aria-label="Open a book"
+            aria-expanded="false"
+          ></button>
+
+          <div class="reading-card" id="reading-card" hidden>
+            <button
+              class="close-book"
+              id="close-book"
+              type="button"
+              aria-label="Close the book"
+            >
+              ×
+            </button>
+            <span class="card-label">A MOMENT TO READ</span>
+            <p class="page-text" id="page-text"></p>
+            <div class="card-bottom">
+              <span id="page-number"></span>
+              <button id="next-page" type="button">Next page →</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 </html>

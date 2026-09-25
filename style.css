@@ -1,38 +1,330 @@
-body {
-  margin: 0;
-  background: #f5f0e8;
-  color: #3f3a34;
-  font-family: Georgia, serif;
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-main {
-  padding: 40px 24px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f5f0e8;
+  color: #403a34;
+  transition: background-color 0.6s ease;
+}
+
+body.lamp-on {
+  background: #eee7dc;
+}
+
+.page {
+  width: min(94%, 1450px);
+  margin: 0 auto;
+  padding: 27px 0 40px;
 }
 
 h1 {
-  margin: 0;
-  font-size: 36px;
-  font-weight: normal;
+  margin: 0 0 28px;
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: clamp(3.2rem, 5.5vw, 6.5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1;
 }
 
-.intro {
-  margin: 12px 0 30px;
-  color: #756b61;
+.gallery {
+  display: grid;
+  grid-template-columns: minmax(170px, 225px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 3vw, 52px);
+}
+
+.side-note {
+  align-self: center;
+  padding-bottom: 8%;
+}
+
+.note-label,
+.note-detail {
+  display: block;
+  color: #997b5d;
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+}
+
+.side-note p {
+  margin: 18px 0 25px;
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: clamp(1.45rem, 1.8vw, 2rem);
+  line-height: 1.18;
+}
+
+.note-detail {
+  color: #817b72;
+  font-size: 0.61rem;
+  white-space: nowrap;
+}
+
+.scene {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 1070px;
+  overflow: hidden;
+  border-radius: 7px;
+  box-shadow: 0 18px 55px rgba(65, 49, 34, 0.12);
+  isolation: isolate;
 }
 
 .corner-photo {
   display: block;
   width: 100%;
-  max-width: 1100px;
   height: auto;
-  margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 12px 35px rgba(50, 40, 30, 0.15);
 }
 
-.hint {
-  margin-top: 25px;
-  font-size: 14px;
-  color: #756b61;
+.scene::before,
+.scene::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+/* A light shadow over the room gives the lamp some contrast. */
+.scene::before {
+  z-index: 1;
+  background: rgba(38, 33, 30, 0.14);
+}
+
+/* The warm glow begins at the lamp shade and spreads into the room. */
+.scene::after {
+  z-index: 2;
+  background:
+    radial-gradient(
+      ellipse 18% 18% at 34.5% 19%,
+      rgba(255, 217, 161, 0.56) 0%,
+      rgba(255, 206, 135, 0.29) 42%,
+      rgba(255, 203, 137, 0.08) 75%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 28% 32% at 35% 31%,
+      rgba(255, 207, 143, 0.2) 0%,
+      transparent 80%
+    );
+  mix-blend-mode: screen;
+}
+
+.scene.lamp-on::before,
+.scene.lamp-on::after {
+  opacity: 1;
+}
+
+.art-overlay {
+  position: absolute;
+  z-index: 3;
+  top: 2.2%;
+  left: 9.85%;
+  width: 5.55%;
+  height: 19.8%;
+  pointer-events: none;
+  opacity: 0;
+  background: transparent;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 78% at center,
+    #000 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 78% at center,
+    #000 55%,
+    transparent 100%
+  );
+  transition: opacity 0.35s ease;
+}
+
+.art-overlay[data-art="1"],
+.art-overlay[data-art="2"] {
+  opacity: 1;
+}
+
+.artwork {
+  display: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.78;
+}
+
+.art-overlay[data-art="1"] .artwork-abstract,
+.art-overlay[data-art="2"] .artwork-botanical {
+  display: block;
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hotspot:hover,
+.hotspot:focus-visible {
+  border-radius: 5px;
+  outline: 2px dotted #e2ae48;
+  outline-offset: -3px;
+  background: rgba(255, 220, 145, 0.1);
+}
+
+.art-hotspot {
+  top: 0;
+  left: 5.5%;
+  width: 13.5%;
+  height: 28%;
+}
+
+.lamp-hotspot {
+  top: 7%;
+  left: 29%;
+  width: 11%;
+  height: 16%;
+}
+
+.books-hotspot {
+  top: 51%;
+  left: 78%;
+  width: 19%;
+  height: 18%;
+}
+
+.reading-card {
+  position: absolute;
+  z-index: 5;
+  top: 39%;
+  left: 44%;
+  width: min(49%, 440px);
+  padding: 26px 30px 23px;
+  border: 1px solid rgba(139, 105, 71, 0.28);
+  border-radius: 3px;
+  background: #fbf6ea;
+  box-shadow: 0 18px 45px rgba(52, 42, 34, 0.24);
+}
+
+.reading-card[hidden] {
+  display: none;
+}
+
+.close-book {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  border: 0;
+  background: transparent;
+  color: #695746;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.card-label,
+.card-bottom {
+  font-family: Arial, sans-serif;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+}
+
+.card-label {
+  color: #9a7958;
+}
+
+.page-text {
+  min-height: 86px;
+  margin: 24px 0;
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: clamp(1.15rem, 1.7vw, 1.6rem);
+  line-height: 1.3;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #867766;
+}
+
+.card-bottom button {
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: #695039;
+  font: inherit;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.card-bottom button:hover,
+.card-bottom button:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .page {
+    width: min(93%, 700px);
+  }
+
+  h1 {
+    margin-bottom: 22px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .side-note {
+    grid-row: 2;
+    padding: 0;
+  }
+
+  .side-note p {
+    margin: 9px 0 12px;
+  }
+
+  .scene {
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding-top: 22px;
+  }
+
+  h1 {
+    font-size: clamp(2.65rem, 10vw, 4rem);
+  }
+
+  .reading-card {
+    top: 26%;
+    left: 18%;
+    width: 75%;
+    padding: 16px 17px;
+  }
+
+  .page-text {
+    min-height: 0;
+    margin: 13px 0;
+    font-size: 1rem;
+  }
+
+  .card-label,
+  .card-bottom {
+    font-size: 0.58rem;
+  }
 }
